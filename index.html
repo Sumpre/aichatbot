@@ -22,6 +22,7 @@
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.15);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --accent: #00c6ff;
         }
 
         * {
@@ -319,7 +320,7 @@
 
         #user-input {
             flex: 1;
-            padding: 15px 20px;
+            padding: 15px 20px 15px 50px;
             border: none;
             border-radius: 24px;
             background: rgba(255, 255, 255, 0.1);
@@ -383,86 +384,208 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Markdown styling */
-        .md-bold {
-            font-weight: 700;
+        /* File upload button - Premium Style */
+        .upload-btn {
+            position: absolute;
+            left: 20px;
+            bottom: 30px;
+            background: linear-gradient(135deg, var(--accent), #0072ff);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 198, 255, 0.3);
         }
 
-        .md-italic {
-            font-style: italic;
+        .upload-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 6px 16px rgba(0, 198, 255, 0.4);
         }
 
-        .md-code {
-            font-family: 'Fira Code', 'Courier New', monospace;
-            background: var(--code-bg);
-            color: #abb2bf;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.9em;
+        .upload-btn.hidden {
+            display: none;
         }
 
-        .md-pre {
-            background: var(--code-bg);
-            padding: 12px;
-            border-radius: 6px;
-            overflow-x: auto;
-            margin: 10px 0;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            color: #abb2bf;
-            font-size: 0.9em;
-            line-height: 1.5;
+        /* Upload menu - Premium Style */
+        .upload-menu {
+            position: absolute;
+            left: 20px;
+            bottom: 70px;
+            background: #2a2a3e;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            animation: fadeInUp 0.2s ease;
+            width: 200px;
         }
 
-        .md-list {
-            padding-left: 24px;
-            margin: 10px 0;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .md-list-ordered {
-            list-style-type: decimal;
+        .upload-menu.show {
+            display: flex;
         }
 
-        .md-list-unordered {
-            list-style-type: disc;
+        .upload-option {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
         }
 
-        .md-list-item {
-            margin-bottom: 6px;
+        .upload-option:hover {
+            background: var(--primary);
         }
 
-        .md-quote {
-            border-left: 3px solid var(--primary);
-            padding-left: 12px;
-            margin: 10px 0;
-            color: rgba(255, 255, 255, 0.7);
-            font-style: italic;
+        .upload-option i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+            color: var(--accent);
         }
 
-        .md-link {
-            color: #64b5f6;
-            text-decoration: none;
-            border-bottom: 1px dotted currentColor;
+        .upload-option::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        .md-link:hover {
-            text-decoration: underline;
+        .upload-option:last-child::after {
+            display: none;
         }
 
-        .md-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 10px 0;
-            font-size: 0.9em;
+        /* File preview container - Above input */
+        .file-preview-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            max-height: 120px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
         }
 
-        .md-table th, .md-table td {
+        .file-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
             padding: 8px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            max-width: 200px;
+            position: relative;
+            animation: slideIn 0.3s ease;
         }
 
-        .md-table th {
-            background: rgba(255, 255, 255, 0.05);
-            text-align: left;
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .file-item i {
+            color: var(--accent);
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: 8px;
+        }
+
+        .file-remove:hover {
+            color: var(--error);
+        }
+
+        /* Preview for images */
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid var(--glass-border);
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Loading animation for uploads */
+        .upload-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .upload-loading-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+        }
+
+        .upload-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), #0072ff);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .upload-filename {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Modals */
@@ -680,13 +803,27 @@
             }
             
             #user-input {
-                padding: 12px 16px;
+                padding: 12px 16px 12px 45px;
                 min-height: 45px;
             }
             
             #send-button {
                 width: 45px;
                 height: 45px;
+            }
+            
+            .upload-btn {
+                left: 15px;
+                bottom: 25px;
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .upload-menu {
+                left: 15px;
+                bottom: 60px;
+                width: 180px;
             }
         }
 
@@ -751,13 +888,46 @@
             </div>
 
             <div class="input-container">
+                <div id="file-preview-container"></div>
                 <div class="input-area">
+                    <button class="upload-btn" id="upload-btn" title="Allega file">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="upload-menu" id="upload-menu">
+                        <div class="upload-option" id="upload-image">
+                            <i class="fas fa-image"></i>
+                            <span>Immagine</span>
+                            <input type="file" id="image-input" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="upload-option" id="upload-video">
+                            <i class="fas fa-video"></i>
+                            <span>Video</span>
+                            <input type="file" id="video-input" accept="video/*" style="display: none;">
+                        </div>
+                        <div class="upload-option" id="upload-pdf">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Documento PDF</span>
+                            <input type="file" id="pdf-input" accept=".pdf" style="display: none;">
+                        </div>
+                    </div>
                     <textarea id="user-input" placeholder="Scrivi il tuo messaggio..." rows="1" autocomplete="off"></textarea>
                     <button id="send-button">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Upload Loading Modal -->
+    <div class="upload-loading" id="upload-loading" style="display: none;">
+        <div class="upload-loading-content">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
+            <h3 style="color: white; margin-bottom: 10px;">Caricamento file</h3>
+            <div class="upload-progress">
+                <div class="upload-progress-bar" id="upload-progress-bar"></div>
+            </div>
+            <div class="upload-filename" id="upload-filename"></div>
         </div>
     </div>
 
@@ -777,6 +947,7 @@
                     <label for="model-select">Modello</label>
                     <select class="modal-input" id="model-select">
                         <option value="deepseek/deepseek-chat-v3-0324:free">DeepSeek Chat v3 (Free)</option>
+                        <option value="qwen/qwen2.5-vl-3b-instruct:free">Qwen 2.5 VL (Free)</option>
                         <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
                         <option value="anthropic/claude-2">Claude 2</option>
                     </select>
@@ -837,25 +1008,40 @@
         const historyClose = document.getElementById('history-close');
         const historyCancel = document.getElementById('history-cancel');
         const historyList = document.getElementById('history-list');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadMenu = document.getElementById('upload-menu');
+        const uploadImage = document.getElementById('upload-image');
+        const uploadVideo = document.getElementById('upload-video');
+        const uploadPdf = document.getElementById('upload-pdf');
+        const imageInput = document.getElementById('image-input');
+        const videoInput = document.getElementById('video-input');
+        const pdfInput = document.getElementById('pdf-input');
+        const filePreviewContainer = document.getElementById('file-preview-container');
+        const uploadLoading = document.getElementById('upload-loading');
+        const uploadProgressBar = document.getElementById('upload-progress-bar');
+        const uploadFilename = document.getElementById('upload-filename');
 
         // Configuration
         const DEFAULT_API_KEY = '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';
         const DEFAULT_MODEL = 'deepseek/deepseek-chat-v3-0324:free';
         const DEFAULT_MEMORY = 10;
         const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
         
         // App State
         let apiKey = localStorage.getItem('neon_ai_api_key') || DEFAULT_API_KEY;
         let currentModel = localStorage.getItem('neon_ai_model') || DEFAULT_MODEL;
         let memorySize = parseInt(localStorage.getItem('neon_ai_memory')) || DEFAULT_MEMORY;
         let isStreaming = false;
+        let isUploading = false;
         let currentBotMessage = null;
         let accumulatedContent = '';
         let controller = null;
-        let conversationHistory = JSON.parse(localStorage.getItem('neon_ai_conversation')) || [];
+        let conversationHistory = [];
         let currentChatId = Date.now().toString();
         let messageHistory = [];
         let activeMenu = null;
+        let uploadedFiles = [];
 
         // Initialize
         function init() {
@@ -863,6 +1049,19 @@
             modelSelect.value = currentModel;
             memorySelect.value = memorySize;
             userInput.focus();
+            
+            // Load conversation history with error handling for quota exceeded
+            try {
+                const savedHistory = localStorage.getItem('neon_ai_conversation');
+                if (savedHistory) {
+                    conversationHistory = JSON.parse(savedHistory);
+                }
+            } catch (e) {
+                console.error('Error loading conversation history:', e);
+                // Clear storage if it's full
+                localStorage.removeItem('neon_ai_conversation');
+                conversationHistory = [];
+            }
             
             // Load current conversation if exists
             const savedConversation = conversationHistory.find(chat => chat.id === currentChatId);
@@ -889,10 +1088,32 @@
                     activeMenu.classList.remove('show');
                     activeMenu = null;
                 }
+                
+                if (e.target !== uploadBtn && !uploadMenu.contains(e.target)) {
+                    uploadMenu.classList.remove('show');
+                }
             });
+
+            // Show/hide upload button based on model
+            updateUploadButtonVisibility();
+            modelSelect.addEventListener('change', updateUploadButtonVisibility);
         }
 
-        // Save conversation to history
+        // Update upload button visibility based on selected model
+        function updateUploadButtonVisibility() {
+            if (modelSelect.value === 'qwen/qwen2.5-vl-3b-instruct:free') {
+                uploadBtn.classList.remove('hidden');
+            } else {
+                uploadBtn.classList.add('hidden');
+                // Clear any uploaded files when switching to non-Qwen model
+                if (uploadedFiles.length > 0) {
+                    uploadedFiles = [];
+                    updateFilePreview();
+                }
+            }
+        }
+
+        // Save conversation to history with error handling
         function saveConversation() {
             const existingChatIndex = conversationHistory.findIndex(chat => chat.id === currentChatId);
             
@@ -900,7 +1121,11 @@
                 id: currentChatId,
                 title: getChatTitle(),
                 timestamp: Date.now(),
-                messages: messageHistory
+                messages: messageHistory.map(msg => {
+                    // Don't save file data in localStorage to avoid quota issues
+                    const { files, ...rest } = msg;
+                    return rest;
+                })
             };
             
             if (existingChatIndex !== -1) {
@@ -913,7 +1138,20 @@
                 }
             }
             
-            localStorage.setItem('neon_ai_conversation', JSON.stringify(conversationHistory));
+            try {
+                localStorage.setItem('neon_ai_conversation', JSON.stringify(conversationHistory));
+            } catch (e) {
+                console.error('Error saving conversation:', e);
+                // If storage is full, remove oldest chats and try again
+                while (conversationHistory.length > 10) {
+                    conversationHistory.pop();
+                }
+                try {
+                    localStorage.setItem('neon_ai_conversation', JSON.stringify(conversationHistory));
+                } catch (e) {
+                    console.error('Still unable to save conversation:', e);
+                }
+            }
         }
 
         // Generate chat title from first message
@@ -930,7 +1168,7 @@
             chatBox.innerHTML = '';
             messages.forEach(msg => {
                 if (msg.role === 'user') {
-                    addUserMessage(msg.content, msg.timestamp);
+                    addUserMessage(msg.content, msg.timestamp, msg.files);
                 } else if (msg.role === 'assistant') {
                     addBotMessage(msg.content, msg.timestamp);
                 }
@@ -939,7 +1177,7 @@
         }
 
         // Add message to chat
-        function addMessage(text, isUser, timestamp = Date.now()) {
+        function addMessage(text, isUser, timestamp = Date.now(), files = []) {
             const messageDiv = document.createElement('div');
             messageDiv.className = isUser ? 'user-message message' : 'bot-message message';
             
@@ -951,6 +1189,28 @@
             
             if (isUser) {
                 mdContent.textContent = text;
+                
+                // Add file previews if any
+                if (files && files.length > 0) {
+                    files.forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            const imgPreview = document.createElement('img');
+                            imgPreview.src = file.url;
+                            imgPreview.className = 'image-preview';
+                            mdContent.appendChild(document.createElement('br'));
+                            mdContent.appendChild(imgPreview);
+                        } else {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'file-item';
+                            fileItem.innerHTML = `
+                                <i class="fas ${getFileIcon(file.type)}"></i>
+                                ${file.name}
+                            `;
+                            mdContent.appendChild(document.createElement('br'));
+                            mdContent.appendChild(fileItem);
+                        }
+                    });
+                }
             } else {
                 mdContent.innerHTML = markdownToHtml(text);
             }
@@ -991,14 +1251,22 @@
             return messageDiv;
         }
 
+        // Get file icon based on type
+        function getFileIcon(type) {
+            if (type.startsWith('image/')) return 'fa-image';
+            if (type.startsWith('video/')) return 'fa-video';
+            if (type === 'application/pdf') return 'fa-file-pdf';
+            return 'fa-file';
+        }
+
         // Add bot message (simplified)
         function addBotMessage(text, timestamp) {
             return addMessage(text, false, timestamp);
         }
 
-        // Add user message (simplified)
-        function addUserMessage(text, timestamp) {
-            return addMessage(text, true, timestamp);
+        // Add user message with files
+        function addUserMessage(text, timestamp, files = []) {
+            return addMessage(text, true, timestamp, files);
         }
 
         // Format timestamp
@@ -1295,9 +1563,104 @@
             return messageHistory.slice(-contextSize);
         }
 
+        // Handle file upload with progress
+        function handleFileUpload(file, type) {
+            if (file.size > MAX_FILE_SIZE) {
+                showToast('File troppo grande (max 5MB)', 'error');
+                return;
+            }
+            
+            isUploading = true;
+            sendButton.disabled = true;
+            uploadLoading.style.display = 'flex';
+            uploadFilename.textContent = file.name;
+            uploadProgressBar.style.width = '0%';
+            
+            // Simulate upload progress (in a real app, you'd use actual upload progress)
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5 + Math.random() * 10;
+                if (progress > 95) {
+                    progress = 95; // Don't go to 100% yet
+                }
+                uploadProgressBar.style.width = `${progress}%`;
+            }, 200);
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                clearInterval(progressInterval);
+                uploadProgressBar.style.width = '100%';
+                
+                setTimeout(() => {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        url: e.target.result
+                    };
+                    
+                    uploadedFiles.push(fileData);
+                    updateFilePreview();
+                    
+                    isUploading = false;
+                    sendButton.disabled = false;
+                    uploadLoading.style.display = 'none';
+                    
+                    showToast('File caricato con successo!', 'success');
+                }, 500);
+            };
+            
+            reader.onerror = function() {
+                clearInterval(progressInterval);
+                isUploading = false;
+                sendButton.disabled = false;
+                uploadLoading.style.display = 'none';
+                showToast('Errore durante il caricamento del file', 'error');
+            };
+            
+            if (type === 'image' || type === 'video') {
+                reader.readAsDataURL(file);
+            } else {
+                reader.readAsText(file);
+            }
+        }
+
+        // Update file preview in input area
+        function updateFilePreview() {
+            filePreviewContainer.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <i class="fas ${getFileIcon(file.type)}"></i>
+                    ${file.name}
+                    <button class="file-remove" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                fileItem.querySelector('.file-remove').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    uploadedFiles.splice(index, 1);
+                    updateFilePreview();
+                });
+                
+                filePreviewContainer.appendChild(fileItem);
+            });
+            
+            // Hide preview if no files
+            if (uploadedFiles.length === 0) {
+                filePreviewContainer.style.display = 'none';
+            } else {
+                filePreviewContainer.style.display = 'flex';
+            }
+        }
+
         // Stream response from API
         async function streamResponse(prompt) {
-            if (isStreaming) return;
+            if (isStreaming || isUploading) return;
             
             isStreaming = true;
             sendButton.disabled = true;
@@ -1311,9 +1674,18 @@
             controller = new AbortController();
             
             // Add user message to history
-            const userMessage = { role: 'user', content: prompt, timestamp: Date.now() };
+            const userMessage = { 
+                role: 'user', 
+                content: prompt, 
+                timestamp: Date.now(),
+                files: [...uploadedFiles]
+            };
             messageHistory.push(userMessage);
-            addUserMessage(prompt, userMessage.timestamp);
+            addUserMessage(prompt, userMessage.timestamp, userMessage.files);
+            
+            // Clear uploaded files
+            uploadedFiles = [];
+            updateFilePreview();
             
             // Add temporary bot message
             currentBotMessage = addBotMessage('', Date.now());
@@ -1325,6 +1697,34 @@
                     content: msg.content
                 }));
                 
+                // Prepare the request body based on model and content
+                let requestBody = {
+                    model: currentModel,
+                    messages: contextMessages,
+                    stream: true
+                };
+                
+                // For Qwen 2.5 VL model, handle image uploads
+                if (currentModel === 'qwen/qwen2.5-vl-3b-instruct:free' && userMessage.files && userMessage.files.some(f => f.type.startsWith('image/'))) {
+                    requestBody.messages = requestBody.messages.map(msg => {
+                        if (msg.role === 'user') {
+                            return {
+                                role: msg.role,
+                                content: [
+                                    { type: 'text', text: msg.content || '' },
+                                    ...userMessage.files
+                                        .filter(f => f.type.startsWith('image/'))
+                                        .map(file => ({
+                                            type: 'image_url',
+                                            image_url: { url: file.url }
+                                        }))
+                                ]
+                            };
+                        }
+                        return msg;
+                    });
+                }
+                
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
@@ -1333,11 +1733,7 @@
                         'X-Title': 'Neon AI Chat',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        model: currentModel,
-                        messages: contextMessages,
-                        stream: true
-                    }),
+                    body: JSON.stringify(requestBody),
                     signal: controller.signal
                 });
                 
@@ -1414,7 +1810,8 @@
         // Handle send message
         function handleSend() {
             const prompt = userInput.value.trim();
-            if (!prompt || isStreaming) return;
+            if (!prompt && uploadedFiles.length === 0) return;
+            if (isStreaming || isUploading) return;
             
             userInput.value = '';
             userInput.style.height = 'auto';
@@ -1456,6 +1853,9 @@
             
             settingsModal.style.display = 'none';
             showToast('Impostazioni salvate!', 'success');
+            
+            // Update upload button visibility when model changes
+            updateUploadButtonVisibility();
         });
         
         // History modal
@@ -1477,6 +1877,49 @@
         
         // Clear chat button
         clearChatBtn.addEventListener('click', clearChat);
+
+        // Upload button
+        uploadBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            uploadMenu.classList.toggle('show');
+        });
+
+        // File upload handlers
+        uploadImage.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        uploadVideo.addEventListener('click', () => {
+            videoInput.click();
+        });
+
+        uploadPdf.addEventListener('click', () => {
+            pdfInput.click();
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], 'image');
+                uploadMenu.classList.remove('show');
+                imageInput.value = '';
+            }
+        });
+
+        videoInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], 'video');
+                uploadMenu.classList.remove('show');
+                videoInput.value = '';
+            }
+        });
+
+        pdfInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], 'pdf');
+                uploadMenu.classList.remove('show');
+                pdfInput.value = '';
+            }
+        });
 
         // Initialize app
         init();
